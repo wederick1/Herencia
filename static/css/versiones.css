@@ -1,82 +1,79 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    margin: 0;
-    padding: 0;
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
-    width: 80%;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
-    font-size: 2rem;
+  text-align: center;
+  color: #333;
 }
 
+/* Estilo para la lista de versiones */
 .version-list {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .version-item {
-    padding: 15px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    margin: 10px 0;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .version-item:hover {
-    background-color: #eaeaea;
+  background-color: #e2e2e2;
 }
 
 .version-item h3 {
-    margin: 0;
-    color: #2d3e50;
+  margin: 0;
+  color: #555;
 }
 
 .version-item p {
-    margin: 5px 0;
-    color: #777;
+  margin: 5px 0;
+  color: #777;
 }
 
+/* Estilo para los detalles de la versión */
 .version-details {
-    display: none;
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #f9fafb;
-    border-left: 3px solid #2d3e50;
+  display: none;
+  padding-top: 10px;
+  margin-top: 10px;
+  border-top: 1px solid #ccc;
 }
 
+.version-details p {
+  color: #444;
+  font-size: 14px;
+}
+
+/* Footer */
 .footer {
-    text-align: center;
-    margin-top: 30px;
-    color: #888;
-    font-size: 0.9rem;
+  text-align: center;
+  margin-top: 30px;
 }
 
 .footer a {
-    color: #2d3e50;
-    text-decoration: none;
+  text-decoration: none;
+  color: #007bff;
 }
 
 .footer a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
