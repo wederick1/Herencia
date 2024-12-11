@@ -1,0 +1,150 @@
+body {
+    font-family: "Times New Roman", Times, serif !important;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.container {
+    padding: 80px 20px; /* Espacio adicional para la top bar */
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    transition: margin-left 0.6s ease-in-out;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.search-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+#search-input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 300px; /* Ajusta el ancho del campo de búsqueda */
+}
+
+
+.table-container {
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+/* Tabla: diseño plano y limpio */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table th, 
+table td {
+    text-align: left;
+    padding: 12px 15px;
+    font-size: 14px;
+}
+
+table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+table td {
+    color: #343a40;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.pagination {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 10px 15px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+    background-color: #0056b3;
+}
+
+.pagination button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+#export-btn-container {
+    display: flex;
+    justify-content: flex-end;  /* Alinea el botón a la derecha */
+    margin-top: 10px;  /* Espacio entre la tabla y el botón */
+}
+
+#export-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;  /* Evita que el texto se parta en varias líneas */
+}
+
+#export-btn:hover {
+    background-color: #218838;
+}
+
+
+
+#back-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+#back-btn:hover {
+    background-color: #0056b3;
+}

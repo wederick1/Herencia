@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar Inquilinos</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel="stylesheet" href="/static/css/historial_inquilinos.css">
+</head>
+
+<body>
+    <div class="container">
+        <button class="btn-agregar">Agregar Inquilino</button>
+        <button class="btn-leer">Historial Inquilinos</button>
+        <h1>Administrar Inquilinos</h1>
+        <h2>Lista de Inquilinos</h2>
+        <table id="ownersTable" class="display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Identificación</th>
+                    <th>Torre</th>
+                    <th>Fecha de Entrada</th>
+                    <th>Fecha de Salida</th>
+                    <th>Acciones</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for inquilino in inquilinos %}
+                <tr data-id="{{ inquilino[0] }}" data-name="{{ inquilino[1] }}" data-idvalue="{{ inquilino[2] }}" data-tower="{{ inquilino[3] }}" data-startdate="{{ inquilino[4] }}">
+                    <td>{{ inquilino[0] }}</td> <!-- ID -->
+                    <td>{{ inquilino[1] }}</td> <!-- Nombre -->
+                    <td>{{ inquilino[2] }}</td> <!-- Identificación -->
+                    <td>{{ inquilino[3] }}</td> <!-- Torre -->
+                    <td>{{ inquilino[4] }}</td> <!-- Fecha de Entrada -->
+                    <td>
+                        {% if inquilino[5] %}
+                        {{ inquilino[5] }} <!-- Si la fecha de salida ya existe -->
+                        {% else %}
+                        <button class="update-end-date-btn">Marcar Salida</button>
+                        <!-- Si la fecha de salida no está definida -->
+                        {% endif %}
+                    </td>
+                    <td>
+                        <button class="btn-edit">Editar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal Agregar Inquilino -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Agregar Nuevo Inquilino</h2>
+            <form id="addTenantForm">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="name" required><br><br>
+
+                <label for="idValue">Identificación:</label>
+                <input type="text" id="idValue" name="idValue" required><br><br>
+
+                <label for="tower">Torre:</label>
+                <input type="text" id="tower" name="tower" required><br><br>
+
+                <label for="startDate">Fecha de Entrada:</label>
+                <input type="date" id="startDate" name="startDate" required><br><br>
+
+                <button type="submit">Agregar Inquilino</button>
+            </form>
+            <div id="responseMessage"></div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- Modal para buscar el historial por torre -->
+     
+    <div id="modalHistorial" class="modal-search">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Buscar Historial de Inquilinos</h2>
+            <div class="search-container">
+                <label for="towerInput">Torre:</label>
+                <input type="text" id="towerInput" name="tower" placeholder="Ingrese la torre">
+            </div>
+            <div id="historialResultados">
+                <table id="historialTable" class="display">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Torre</th>
+                            <th>Fecha de Entrada</th>
+                            <th>Fecha de Salida</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Filas generadas dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Modal Editar Inquilino -->
+<div id="modalEdit" class="modal modal-edit">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Editar Inquilino</h2>
+        <form id="editForm">
+            <label for="editName">Nombre:</label>
+            <input type="text" id="editName" name="name">
+            <label for="editIdValue">Identificación:</label>
+            <input type="text" id="editIdValue" name="idValue">
+            <label for="editTower">Torre:</label>
+            <input type="text" id="editTower" name="tower">
+            <label for="editStartDate">Fecha de Entrada:</label>
+            <input type="date" id="editStartDate" name="startDate">
+            <button type="submit" id="saveChangesBtn">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="/static/js/historial_inquilinos.js"></script>
+</body>
+
+</html>

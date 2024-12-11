@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Residencial Herencia</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+
+<body>
+
+    <!-- Cuadro de error que se mostrará si hay un error -->
+    <div id="error-box" class="error-box">
+        <p id="error-message"></p>
+    </div>
+
+    <div class="login-container">
+        <div class="login-form">
+            <!-- Contenedor para el logo circular -->
+            <div class="logo-container">
+                <img src="/static/img/RH sin icono.png" alt="Logo" class="logo">
+            </div>
+            <h2>Residencial Herencia</h2>
+
+            <!-- Formulario de login -->
+            <form id="loginForm" method="POST">
+                <div class="input-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" name="username" placeholder="Escriba su usuario" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" placeholder="Escriba su contraseña" required>
+                </div>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script para manejar el error -->
+    <script src="/static/js/login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,224 @@
+/* General Styles */
+body {
+    font-family: "Times New Roman", Times, serif !important;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+h1, h2 {
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative; /* Necesario para posicionar el botón dentro de la sección */
+    padding-top: 60px; /* Para evitar que el botón tape el contenido */
+}
+
+/* Tabla: diseño plano y limpio */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table th, 
+table td {
+    text-align: left;
+    padding: 12px 15px;
+    font-size: 14px;
+}
+
+table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+table td {
+    color: #343a40;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+/* Botón "Agregar Inquilino" */
+.btn-agregar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-agregar:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-agregar:active {
+    background-color: #003f7f;
+    transform: scale(1);
+}
+
+/* Estilo básico del modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1; /* Asegura que el modal esté sobre el contenido */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+    overflow: auto;
+    opacity: 0;
+    transition: opacity 0.6s ease; /* Animación de opacidad */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15px auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    transform: scale(0.95);
+    transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.modal.show {
+    display: block; /* Hacer visible el modal */
+    opacity: 1; /* Mostrar con animación */
+}
+
+.modal-content.show {
+    transform: scale(1); /* Aumentar el tamaño */
+    opacity: 1;
+}
+
+/* Estilo para los inputs */
+.modal-content input[type="text"],
+.modal-content input[type="password"],
+.modal-content select {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Estilo para el botón */
+.modal-content button {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal-content button:hover {
+    background-color: #45a049; /* Verde más oscuro */
+}
+
+/* Estilo adicional para la cabecera del modal */
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.modal-header button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.modal-header button:hover {
+    color: #000;
+}
+
+.modal-header {
+    position: relative; /* Necesario para que el botón se posicione relativo al header */
+    padding: 10px;
+    display: flex;
+    justify-content: space-between; /* Espacio entre título y botón */
+    align-items: center;
+}
+
+#close-modal {
+    position: absolute; /* Para posicionarlo en una esquina */
+    top: 10px; /* Espaciado desde la parte superior */
+    right: 10px; /* Espaciado desde la parte derecha */
+    background: none; /* Sin fondo */
+    border: none; /* Sin borde */
+    font-size: 18px; /* Tamaño del texto */
+    cursor: pointer; /* Manito al pasar el mouse */
+    color: #aaa; /* Color gris claro */
+}
+
+#close-modal:hover {
+    color: #000; /* Cambiar color al pasar el mouse */
+}
+
+.btn-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.2s;
+    text-decoration: none;
+}
+
+.btn-back:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-back:active {
+    background-color: #003f7f;
+    transform: scale(1);
+}

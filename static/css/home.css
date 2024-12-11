@@ -1,0 +1,480 @@
+/* Estilos generales */
+body {
+    font-family: "Times New Roman", Times, serif !important;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+    overflow-x: hidden; /* Evitar scroll horizontal */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #343a40;
+    color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease-in-out; /* Animación más rápida y fluida */
+    transform: translateX(0); /* Sidebar visible */
+    z-index: 10;
+}
+
+.sidebar.hidden {
+    transform: translateX(-100%); /* Sidebar oculto */
+}
+
+/* Asegurar que los elementos internos no tengan fondo */
+.sidebar ul, .sidebar div {
+    background-color: inherit; /* Heredan el fondo del sidebar */
+}
+
+
+.sidebar .logo {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #f8f9fa;
+    border-bottom: 1px solid #495057;
+    padding-bottom: 15px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #f8f9fa;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #495057;
+    color: #ffffff;
+}
+
+.sidebar ul li.dropdown .dropdown-menu {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.sidebar ul li.dropdown .dropdown-item {
+    text-decoration: none;
+    color: #adb5bd;
+    font-size: 14px;
+    padding: 5px 0;
+    display: block;
+    transition: color 0.3s;
+}
+
+.sidebar ul li.dropdown .dropdown-item:hover {
+    color: #ffffff;
+}
+
+
+
+/* Para pantallas pequeñas */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .sidebar ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 10px 0;
+    }
+    .sidebar ul li {
+        margin: 0;
+    }
+}
+
+/* Top bar: diseño limpio y moderno */
+.top-bar {
+    height: 60px;
+    margin-left: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 250px;
+    right: 0;
+    z-index: 1000;
+    background-color: transparent;
+    box-shadow: none;
+    transition: top 0.3s ease-in-out;
+}
+
+/* Ocultar el top-bar */
+.top-bar.hidden {
+    top: -100px; /* Oculte el top-bar al moverlo fuera de la pantalla */
+}
+
+
+/* Botón de alternar */
+.top-bar #toggleSidebar {
+    position: fixed;
+    left: 250px; /* Alineación al final del sidebar */
+    top: 10px;
+    z-index: 1001;
+    font-size: 24px;
+    background-color: transparent;
+    color: #007bff;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.top-bar #toggleSidebar:hover {
+    color: #0056b3;
+}
+
+/* Icono de la flecha */
+#toggleSidebar i {
+    transition: transform 0.3s ease;
+}
+
+#toggleSidebar.rotate {
+    transform: rotate(180deg); /* Flecha rotada */
+}
+
+
+
+.search-input {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
+    padding: 8px 15px;
+    width: 250px;
+    background-color: rgb(255, 255, 255);
+    color: #fff;
+    transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+.search-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.5);
+    outline: none;
+}
+
+.user-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user-icon {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 123, 255, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.user-icon:hover {
+    background-color: rgba(0, 123, 255, 1);
+    transform: scale(1.1);
+}
+
+.user-dropdown .dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px 0;
+    width: 150px;
+    display: none;
+    z-index: 100;
+}
+
+.user-dropdown .dropdown-menu.active {
+    display: block;
+}
+
+.user-dropdown .dropdown-item {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #343a40;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.user-dropdown .dropdown-item:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+    color: #007bff;
+}
+
+
+
+/* Content */
+.content {
+    margin-left: 250px; /* Espacio reservado para el sidebar */
+    padding: 80px 20px; /* Espacio adicional para la top bar */
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    transition: margin-left 0.6s ease-in-out; /* Suave ajuste del margen */
+}
+
+.content.expanded {
+    margin-left: 0; /* Se expande para ocupar todo el ancho */
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 20px;
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+}
+
+button {
+    font-size: 14px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    background-color: #007bff;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Formulario: diseño plano y limpio */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    font-size: 18px;
+    color: #495057;
+    margin-bottom: 5px;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input:focus,
+form select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+form .form-buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+form .form-buttons button {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form .btn-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+form .btn-success:hover {
+    background-color: #218838;
+}
+
+form .btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+form .btn-danger:hover {
+    background-color: #c82333;
+}
+
+form .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+form .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+
+/* Tabla: diseño plano y limpio */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table th, 
+table td {
+    text-align: left;
+    padding: 12px 15px;
+    font-size: 14px;
+}
+
+table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+table td {
+    color: #343a40;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.suggestions-list {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd; /* Bordes más suaves */
+    border-radius: 8px; /* Bordes redondeados */
+    max-height: 200px; /* Aumento el tamaño máximo para más sugerencias */
+    overflow-y: hidden; /* Permite el scroll solo si el contenido excede el tamaño */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra más sutil y suave */
+    z-index: 1000;
+    width: 10%; /* Alineación con el tamaño del input */
+    margin-top: 5px; /* Para un pequeño espacio entre el input y la lista */
+    border-top: none; /* Eliminar la línea superior para un aspecto más limpio */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Tipografía moderna */
+    font-size: 14px;
+}
+
+.suggestions-list.hidden {
+    display: none; /* Mantener oculta la lista cuando sea necesario */
+}
+
+.suggestions-list div {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease, padding 0.3s ease; /* Transiciones suaves */
+}
+
+.suggestions-list div:hover {
+    background: #007bff; /* Fondo azul claro en hover */
+    color: white; /* Cambiar el color del texto al pasar el cursor */
+    padding-left: 15px; /* Efecto de desplazamiento suave */
+}
+
+.hidden {
+    display: none;
+}
+
+.btn-add {
+    border-radius: 14px;
+    background-color: #e2cfcf;
+    color: black;
+}
+
+.markExit{
+    border-radius: 14px;
+    background-color: #e2cfcf;
+    color: black;
+}
+
+/* Apuntar a las notificaciones de Notyf */
+.notyf {
+    border-radius: 30px; /* Agrega un borde redondeado de 10px */
+}
+
+/* Puedes agregar otros estilos para personalizar más la apariencia */
+.notyf.success {
+    background-color: #4caf50; /* Color de fondo para el éxito */
+    color: white;
+}
+
+.notyf.error {
+    background-color: #f44336; /* Color de fondo para el error */
+    color: white;
+}
+
+.notyf.info {
+    background-color: #2196F3; /* Color de fondo para la información */
+    color: white;
+}

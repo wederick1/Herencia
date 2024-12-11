@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar Usuarios</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel="stylesheet" href="/static/css/usuarios.css">
+</head>
+
+<body>
+    <div class="container">
+        <a href="{{ url_for('home.home') }}" class="btn-back">Atras</a>
+        <button class="btn-agregar">Agregar Usuario</button>
+        <h1>Administrar Usuarios</h1>
+        <h2>Lista de Usuarios</h2>
+        <table id="ownersTable" class="display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Rol</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr data-id="{{ usuario[0] }}" >
+                    <td>{{ usuario[0] }}</td> 
+                    <td>{{ usuario[1] }}</td> 
+                    <td>{{ usuario[2] }}</td> 
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal" id="modal-agregar">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Agregar Usuario</h2>
+                <button id="close-modal">X</button>
+            </div>
+            <form id="form-agregar" method="POST" action="/usuarios/agregar">
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username" required><br>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required><br>
+                <label for="rol">Rol:</label>
+                <select id="rol" name="rol" required>
+                    <option value="1">1</option>
+                    <option value="0">0</option>
+                </select><br><br>
+                <button type="submit">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="/static/js/usuarios.js"></script>
+</body>
+
+</html>

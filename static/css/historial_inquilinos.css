@@ -1,0 +1,401 @@
+/* General Styles */
+body {
+    font-family: "Times New Roman", Times, serif !important;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+h1, h2 {
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative; /* Necesario para posicionar el botón dentro de la sección */
+    padding-top: 60px; /* Para evitar que el botón tape el contenido */
+}
+
+/* Tabla: diseño plano y limpio */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table th, 
+table td {
+    text-align: left;
+    padding: 12px 15px;
+    font-size: 14px;
+}
+
+table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+table td {
+    color: #343a40;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+/* Botón "Agregar Inquilino" */
+.btn-agregar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-agregar:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-agregar:active {
+    background-color: #003f7f;
+    transform: scale(1);
+}
+
+/* Estilos para el Modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1; /* Asegura que el modal esté sobre el contenido */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+    overflow: auto;
+    opacity: 0;
+    transition: opacity 0.6s ease; /* Animación de opacidad */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15px auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+/* Cuando el modal se abre */
+.modal.show {
+    display: block;
+    opacity: 1;
+    
+}
+
+
+
+/* Botón de cierre */
+.close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilos del formulario dentro del modal */
+#addTenantForm input,
+#addTenantForm select,
+#addTenantForm button {
+    width: 100%;
+    padding: 8px; /* Reduce el padding */
+    margin: 6px 0; /* Reduce el margen entre los elementos */
+    font-size: 14px; /* Disminuye el tamaño de la fuente */
+    border: 1px solid #ddd;
+    border-radius: 4px; /* Reduce el radio de los bordes */
+}
+
+/* Ajusta el tamaño del botón */
+#addTenantForm button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 14px; /* Asegura que el botón tenga un tamaño compacto */
+}
+
+#addTenantForm button:hover {
+    background-color: #0056b3;
+}
+
+/* Clase que oculta el botón */
+.hidden {
+    display: none;
+}
+
+/* Botón "Agregar Inquilino" */
+.update-end-date-btn {
+    position: relative;
+    background-color: #28a745;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.update-end-date-btn:hover {
+    background-color:  #28a746b7;
+    transform: scale(1.05);
+}
+
+.update-end-date-btn:active {
+    background-color: #28a7467c;
+    transform: scale(1);
+}
+
+.btn-leer{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #003f7f;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-leer:hover {
+    background-color:  #003f7fcb;
+    transform: scale(1.05);
+}
+
+.btn-leer:active {
+    background-color: #003f7f86;
+    transform: scale(1);
+}
+
+/* Estilos para el Modal de búsqueda */
+.modal-search {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro */
+    overflow-y: auto;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.modal-search .modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%; /* Más ancho */
+    max-width: 1200px; /* Límite de tamaño */
+    height: 80%; /* Más alto */
+    overflow-y: auto; /* Scroll interno si es necesario */
+    transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+/* Clase para mostrar el modal */
+.modal-search.show {
+    display: block;
+    opacity: 1;
+}
+
+/* Botón de cierre */
+.modal-search .close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    cursor: pointer;
+}
+
+.modal-search .close-btn:hover,
+.modal-search .close-btn:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilo de la tabla */
+#historialTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#historialTable th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+#historialTable td{
+    color: #343a40;
+}
+
+#historialTable th {
+    background-color: #343a40;
+    color: white;
+}
+
+.search-container {
+    margin-bottom: 20px;
+}
+
+.btn-edit{
+    position: relative;
+    background-color: #87CEEB;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-edit:hover {
+    background-color:  #87cfebb6;
+    transform: scale(1.05);
+}
+
+.btn-edit:active {
+    background-color: #87cfeb83;
+    transform: scale(1);
+}
+
+/* Modal de edición */
+.modal-edit {
+    display: none;
+    position: fixed;
+    z-index: 1000; /* Asegúrate de que el modal esté encima de otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro */
+    overflow: auto; /* Permite el desplazamiento si el contenido es mayor que la pantalla */
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+/* Estilos del formulario dentro del modal de edición */
+.modal-edit form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-edit form label {
+    font-size: 16px;
+    color: #333;
+}
+
+.modal-edit form input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.modal-edit form input[type="date"] {
+    padding: 7px;
+    font-size: 16px;
+}
+
+.modal-edit #saveChangesBtn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.modal-edit #saveChangesBtn:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo de transición para el modal */
+.modal-edit.show {
+    display: block;
+    opacity: 1;
+}
+
+.estado-activo {
+    background-color: #33ff3f;
+    color: #ffffff !important;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+}
