@@ -44,7 +44,7 @@ def versiones():
         )
 
     except Exception as e:
-        return jsonify({"error": f"Error al cargar las versiones: {str(e)}"}), 500
+        return render_template("versiones.html")
 
 
 
@@ -109,7 +109,7 @@ def download_latest_version():
                 if os.listdir(versiones_folder):
                     shutil.rmtree(versiones_folder)
                     shutil.rmtree(UPLOAD_FOLDER)
-                    
+
 
                 # Crear el archivo Version_details.txt con los detalles de la versión
             version_details_path = os.path.join(DESTINATION_FOLDER, "Version_details.txt")
