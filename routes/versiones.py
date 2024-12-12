@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, jsonify, send_file
-from version_utils import obtener_releases,  descargar_y_extraer_zip 
+from version_utils import obtener_releases,  descargar_y_extraer_zip, leer_detalles_version
 from utilidades import login_required  # Asegúrate de tener esta función para autenticación
 import os, shutil, requests
+from datetime import datetime
 
 
 # Definir UPLOAD_FOLDER dentro de este archivo
@@ -14,15 +15,38 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 bp = Blueprint('versiones', __name__)
 
-# Ruta para mostrar las versiones
 @bp.route('/versiones')
 @login_required
 def versiones():
-    # Obtener las versiones desde la función obtener_releases
-    versions, new_version_available, _ = obtener_releases()
+    try:
+        # Leer los detalles de la versión actual desde el archivo
+        detalles = leer_detalles_version()
 
-    # Enviar las versiones y el estado de la nueva versión al template
-    return render_template("versiones.html", versions=versions, new_version_available=new_version_available)
+        # Obtener la información de releases desde GitHub
+        _, new_version_available, latest_release = obtener_releases()
+
+        # Crear un diccionario para la versión más reciente
+        if latest_release:
+            detalles_nueva_version = {
+                "nombre": latest_release["name"],
+                "fecha": datetime.strptime(latest_release["created_at"], "%Y-%m-%dT%H:%M:%SZ").strftime("%d/%m/%Y"),
+                "descripcion": latest_release.get("body", "Sin descripción"),
+                "url": latest_release["html_url"],
+            }
+        else:
+            detalles_nueva_version = None
+
+        return render_template(
+            "versiones.html",
+            detalles=[detalles],  # Versión instalada
+            new_version_available=new_version_available,  # Si hay nueva versión
+            detalles_nueva_version=detalles_nueva_version  # Detalles de la nueva versión, si existe
+        )
+
+    except Exception as e:
+        return jsonify({"error": f"Error al cargar las versiones: {str(e)}"}), 500
+
+
 
 # Ruta para comprobar si hay una nueva versión
 @bp.route('/check_for_update', methods=['POST'])
@@ -82,8 +106,18 @@ def download_latest_version():
                         shutil.move(source_path, destination_path)
 
                 # Eliminar la carpeta 'versiones' si está vacía
-                if not os.listdir(versiones_folder):
-                    os.rmdir(versiones_folder)
+                if os.listdir(versiones_folder):
+                    shutil.rmtree(versiones_folder)
+                    shutil.rmtree(UPLOAD_FOLDER)
+                    
+
+                # Crear el archivo Version_details.txt con los detalles de la versión
+            version_details_path = os.path.join(DESTINATION_FOLDER, "Version_details.txt")
+            with open(version_details_path, 'w', encoding='utf-8') as f:
+                f.write(f"Nombre de la versión: {latest_release['name']}\n")
+                f.write(f"Descripción: {latest_release.get('body', 'No disponible')}\n")
+                f.write(f"Fecha de creación: {latest_release['created_at']}\n")
+
 
             return jsonify({"message": "Archivos descargados y extraídos correctamente", "files": downloaded_files}), 200
 

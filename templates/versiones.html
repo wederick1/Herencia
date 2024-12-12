@@ -20,12 +20,12 @@
 
         <!-- Lista de versiones, inicialmente oculta -->
         <ul class="version-list">
-            {% for version in versions %}
+            {% for detalle in detalles %}
                 <li class="version-item" onclick="toggleDetails(this)">
-                    <h3>{{ version.version }}</h3>
-                    <p>{{ version.date }}</p>
+                    <h3>{{ detalle.nombre }}</h3>
+                    <p>{{ detalle.fecha }}</p>
                     <div class="version-details">
-                        <p><strong>Descripción:</strong> {{ version.description }}</p>
+                        <p><strong>Descripción:</strong> {{ detalle.descripcion }}</p>
                     </div>
                 </li>
             {% endfor %}

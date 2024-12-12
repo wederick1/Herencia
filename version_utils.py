@@ -3,6 +3,7 @@ from datetime import datetime
 import zipfile
 import os
 
+
 # URL de la API de GitHub para obtener los releases
 GITHUB_RELEASES_URL = "https://api.github.com/repos/wederick1/Herencia/releases"
 
@@ -30,19 +31,29 @@ def obtener_releases():
 
             versions.append(version_data)
 
-            # Comprobar si hay una nueva versión
-            if not release["prerelease"]:
-                new_version_available = True
-
-            # Determinar el último release
-            if not latest_release or release_date > datetime.strptime(latest_release["created_at"], "%Y-%m-%dT%H:%M:%SZ"):
+            # Determinar el último release no preliminar
+            if not release["prerelease"] and (not latest_release or release_date > datetime.strptime(latest_release["created_at"], "%Y-%m-%dT%H:%M:%SZ")):
                 latest_release = release
+
+        # Leer la versión actual desde el archivo 'Version_details.txt'
+        try:
+            detalles_actuales = leer_detalles_version()
+            version_actual = detalles_actuales["nombre"] if detalles_actuales["nombre"] else None
+        except FileNotFoundError:
+            version_actual = None  # Si no hay archivo, se asume que no hay una versión instalada
+
+        # Comprobar si hay una nueva versión disponible
+        if latest_release:
+            version_github = latest_release["name"]
+            if version_actual is None or version_actual != version_github:
+                new_version_available = True
 
         return versions, new_version_available, latest_release
 
     except requests.exceptions.RequestException as e:
         print(f"Error al obtener los releases de GitHub: {e}")
         return [], False, None
+
 
 def descargar_y_extraer_zip(asset_url, file_name, output_folder):
     """
@@ -97,3 +108,51 @@ def descargar_y_extraer_zip(asset_url, file_name, output_folder):
 
     except Exception as e:
         return False, f"Error al descargar o extraer el ZIP: {str(e)}"  
+
+
+
+def leer_detalles_version():
+    """
+    Lee los detalles de la versión desde el archivo 'Version_details.txt' ubicado en el nivel raíz de la aplicación.
+
+    Returns:
+        dict: Un diccionario con los detalles de la versión, incluyendo nombre, descripción y fecha.
+
+    Raises:
+        FileNotFoundError: Si el archivo 'Version_details.txt' no existe.
+        ValueError: Si faltan datos o el archivo tiene un formato incorrecto.
+    """
+    # Construir la ruta absoluta del archivo
+    ruta_archivo = os.path.join(os.path.abspath(os.path.dirname(__file__)), "Version_details.txt")
+
+    # Inicializar los detalles de la versión
+    detalles = {
+        "nombre": None,
+        "descripcion": None,
+        "fecha": None,
+    }
+
+    try:
+        # Leer el archivo línea por línea
+        with open(ruta_archivo, "r", encoding="utf-8") as archivo:
+            for linea in archivo:
+                # Dividir la línea en clave y valor
+                if ":" in linea:
+                    clave, valor = map(str.strip, linea.split(":", 1))
+                    if clave == "Nombre de la versión":
+                        detalles["nombre"] = valor
+                    elif clave == "Descripción":
+                        detalles["descripcion"] = valor
+                    elif clave == "Fecha de creación":
+                        detalles["fecha"] = valor
+
+        # Validar que todos los detalles hayan sido encontrados
+        if not all(detalles.values()):
+            raise ValueError("El archivo 'Version_details.txt' no contiene todos los campos requeridos.")
+
+        return detalles
+
+    except FileNotFoundError:
+        raise FileNotFoundError(f"El archivo 'Version_details.txt' no fue encontrado en la ruta: {ruta_archivo}")
+    except Exception as e:
+        raise RuntimeError(f"Error al leer los detalles de la versión: {str(e)}")
