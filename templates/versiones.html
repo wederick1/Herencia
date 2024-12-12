@@ -14,6 +14,11 @@
 <body>
     <div class="container">
         <h1>Historial de Versiones</h1>
+        <a href="{{ url_for('home.home') }}" id="back-btn">Atrás</a>
+        <!-- Botón para comprobar actualizaciones dentro del contenedor -->
+        <button id="checkUpdateBtn" class="btn-comprobar">Comprobar Actualización</button>
+
+        <!-- Lista de versiones, inicialmente oculta -->
         <ul class="version-list">
             {% for version in versions %}
                 <li class="version-item" onclick="toggleDetails(this)">
