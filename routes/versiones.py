@@ -50,7 +50,6 @@ def download_latest_version():
             for asset in latest_release["assets"]:
                 asset_url = asset["browser_download_url"]
                 file_name = asset["name"]
-                file_path = os.path.join(UPLOAD_FOLDER, file_name)
 
                 # Descargar y extraer el archivo ZIP en la carpeta `archivos/versiones`
                 success, message = descargar_y_extraer_zip(asset_url, file_name, UPLOAD_FOLDER)
@@ -63,28 +62,28 @@ def download_latest_version():
             # Mover los archivos extraídos de "archivos/versiones" al destino
             versiones_folder = os.path.join(UPLOAD_FOLDER, 'versiones')
             if os.path.exists(versiones_folder):
-                        # Recorrer la carpeta 'versiones' y mover los archivos con su estructura de directorios
-                        for root, dirs, files in os.walk(versiones_folder):
-                            for file in files:
-                                # Ruta completa del archivo en 'versiones'
-                                source_path = os.path.join(root, file)
-                                # Mantenemos la estructura de directorios en el destino
-                                relative_path = os.path.relpath(source_path, versiones_folder)
-                                destination_path = os.path.join(DESTINATION_FOLDER, relative_path)
+                # Recorrer la carpeta 'versiones' y mover los archivos con su estructura de directorios
+                for root, dirs, files in os.walk(versiones_folder):
+                    for file in files:
+                        # Ruta completa del archivo en 'versiones'
+                        source_path = os.path.join(root, file)
+                        # Mantenemos la estructura de directorios en el destino
+                        relative_path = os.path.relpath(source_path, versiones_folder)
+                        destination_path = os.path.join(DESTINATION_FOLDER, relative_path)
 
-                                # Crear el directorio destino si no existe
-                                os.makedirs(os.path.dirname(destination_path), exist_ok=True)
+                        # Crear el directorio destino si no existe
+                        os.makedirs(os.path.dirname(destination_path), exist_ok=True)
 
-                                # Si el archivo ya existe, eliminarlo
-                                if os.path.exists(destination_path):
-                                    os.remove(destination_path)
+                        # Si el archivo ya existe, eliminarlo
+                        if os.path.exists(destination_path):
+                            os.remove(destination_path)
 
-                                # Mover el archivo
-                                shutil.move(source_path, destination_path)
+                        # Mover el archivo
+                        shutil.move(source_path, destination_path)
 
-                        # Eliminar la carpeta 'versiones' si está vacía
-                        if not os.listdir(versiones_folder):
-                            os.rmdir(versiones_folder)
+                # Eliminar la carpeta 'versiones' si está vacía
+                if not os.listdir(versiones_folder):
+                    os.rmdir(versiones_folder)
 
             return jsonify({"message": "Archivos descargados y extraídos correctamente", "files": downloaded_files}), 200
 

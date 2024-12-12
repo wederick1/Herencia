@@ -46,39 +46,54 @@ def obtener_releases():
 
 def descargar_y_extraer_zip(asset_url, file_name, output_folder):
     """
-    Descarga y extrae un archivo ZIP, y organiza su contenido en una carpeta llamada 'versiones'.
+    Descarga un archivo ZIP y lo extrae, manteniendo su estructura de carpetas.
     """
     try:
+        # Crear la carpeta de salida si no existe
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+
+        zip_path = os.path.join(output_folder, file_name)
+
+        # Descargar el archivo ZIP
         response = requests.get(asset_url)
         response.raise_for_status()
 
-        # Ruta completa donde se guardará el archivo ZIP
-        zip_path = os.path.join(output_folder, file_name)
-
-        # Guardar el archivo ZIP en el directorio de salida
+        # Guardar el archivo ZIP en el sistema
         with open(zip_path, 'wb') as f:
             f.write(response.content)
 
-        # Ruta para extraer los archivos en una carpeta "versiones"
-        versiones_folder = os.path.join(output_folder, 'versiones')
-        if not os.path.exists(versiones_folder):
-            os.makedirs(versiones_folder)
+        # Verificar que el archivo fue descargado
+        if not os.path.exists(zip_path):
+            raise FileNotFoundError(f"El archivo {zip_path} no se pudo descargar correctamente.")
 
-        # Verificar si es un archivo ZIP válido
+        # Crear carpeta para extraer los archivos
+        extract_path = os.path.join(output_folder, 'versiones')
+        if not os.path.exists(extract_path):
+            os.makedirs(extract_path)
+
+        # Verificar si el archivo descargado es un ZIP válido
         if zipfile.is_zipfile(zip_path):
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                # Extraer todo el contenido en la carpeta "versiones"
-                zip_ref.extractall(versiones_folder)
+                zip_ref.extractall(extract_path)
 
             # Eliminar el archivo ZIP después de la extracción
             os.remove(zip_path)
 
-            return True, f"Archivo ZIP descargado y extraído correctamente en {versiones_folder}."
+            return True, f"Archivo ZIP descargado y extraído correctamente en {extract_path}."
         else:
-            # Si no es un ZIP válido, eliminar el archivo y retornar error
+            # Si no es un ZIP válido, eliminar el archivo descargado
             os.remove(zip_path)
-            return False, "El archivo descargado no es un archivo ZIP válido."
+            return False, "El archivo descargado no es un ZIP válido."
+
+    except requests.RequestException as e:
+        return False, f"Error al descargar el archivo: {str(e)}"
+
+    except FileNotFoundError as e:
+        return False, f"Archivo no encontrado: {str(e)}"
+
+    except zipfile.BadZipFile:
+        return False, "El archivo descargado no es un archivo ZIP válido."
 
     except Exception as e:
-        print(f"Error al descargar o extraer el ZIP: {e}")
-        return False, f"Error al descargar o extraer el ZIP: {str(e)}"
+        return False, f"Error al descargar o extraer el ZIP: {str(e)}"  
