@@ -1,4 +1,141 @@
+# Sistema operativo
+#############################
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Node.js
+#############################
+
+# Dependencias de Node
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor
+#############################
+
+# VIM
+*.swp
+*.swo
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# IDEs y entornos de desarrollo
+#############################
+
+# JetBrains IDEs (PyCharm, IntelliJ, WebStorm, etc.)
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Eclipse
+.project
+.classpath
+.csettings/
+.idea/
+
+# Archivos de compilación
+#############################
+
+# Python
 __pycache__/
 *.pyc
 *.pyo
+*$py.class
 
+# Archivos de entorno virtual
+venv/
+env/
+ENV/
+venv.bak/
+env.bak/
+*.egg-info/
+dist/
+build/
+
+# Java
+#############################
+
+# Archivos de compilación de Java
+*.class
+*.jar
+*.war
+*.ear
+*.swp
+
+# Android
+#############################
+
+# Archivos de compilación de Android
+*.apk
+*.ap_ 
+.idea/
+
+# Windows
+#############################
+
+# Archivos de compilación de Windows
+*.exe
+*.dll
+*.pdb
+*.lib
+*.obj
+
+# Archivos de configuración
+#############################
+
+# Configuración de Docker
+*.docker
+docker-compose.override.yml
+
+# Log files
+#############################
+
+# Archivos de log
+*.log
+
+# Archivos de base de datos
+#############################
+
+# SQLite
+*.sqlite3
+*.db
+
+# Archivos de backup
+#############################
+
+# Archivos de respaldo
+*~
+
+# Otros
+#############################
+
+# Archivos específicos del proyecto
+project-specific-folder/
+
+# Ignorar archivos temporales o intermedios
+*.bak
+*.tmp
+*.swp
