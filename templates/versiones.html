@@ -42,13 +42,15 @@
             </div>
         </div>
 
-        <!-- Modal de actualización -->
-        <div id="updateModal" class="modal hidden" onclick="closeModal(event)">
-            <div class="modal-content">
-                <p id="updateMessage"></p>
-                <button id="updateBtn" class="btn-actualizar">Actualizar</button>
-            </div>
+    <!-- Modal de actualización -->
+    <div id="updateModal" class="modal hidden" onclick="closeModal(event)">
+        <div class="modal-content">
+            <p id="updateMessage">Descargando...</p>
+            <progress id="downloadingBar" value="0" max="100"></progress>
+            <button id="updateBtn" class="btn-actualizar">Actualizar</button>
         </div>
+    </div>
+
      
 
         <div class="footer">

@@ -46,23 +46,73 @@ document.getElementById('checkUpdateBtn').addEventListener('click', function() {
 
 // Descargar e insertar archivos al hacer clic en el botón de actualizar
 document.getElementById('updateBtn').addEventListener('click', function () {
+  const updateMessage = document.getElementById('updateMessage');
+  const downloadingBar = document.getElementById('downloadingBar');
+  const updateModal = document.getElementById('updateModal');
+
+  // Abre el modal
+  updateModal.classList.remove('hidden');
+  
+  // Inicia la descarga
   fetch('/download_latest_version')
       .then(response => {
           if (!response.ok) {
               throw new Error(`Error en la descarga: ${response.status}`);
           }
-          return response.json();
+          
+          // Obtener el lector del cuerpo de la respuesta para leer en fragmentos
+          const reader = response.body.getReader();
+          const contentLength = response.headers.get('Content-Length');
+          
+          let receivedLength = 0; // Tamaño recibido hasta el momento
+          let totalLength = parseInt(contentLength, 10); // Longitud total del archivo
+          
+          // Mientras no se haya descargado completamente el archivo
+          const progressInterval = setInterval(() => {
+              if (receivedLength < totalLength) {
+                  updateMessage.textContent = `Descargando... (${Math.round((receivedLength / totalLength) * 100)}%)`;
+                  downloadingBar.value = (receivedLength / totalLength) * 100;
+              }
+          }, 500);
+
+          // Leer el contenido de la respuesta en fragmentos
+          return new Response(new ReadableStream({
+              start(controller) {
+                  function push() {
+                      reader.read().then(({ done, value }) => {
+                          if (done) {
+                              controller.close();
+                              clearInterval(progressInterval); // Detener la barra de progreso
+                              updateMessage.textContent = 'Descarga completada!';
+                              setTimeout(() => {
+                                  closeModal(); // Cerrar el modal después de un pequeño retraso
+                              }, 1000);
+                              return;
+                          }
+                          
+                          receivedLength += value.length; // Incrementar la cantidad descargada
+                          controller.enqueue(value); // Encolar el fragmento descargado
+                          push(); // Seguir leyendo
+                      }).catch(err => {
+                          console.error('Error al leer la respuesta:', err);
+                          new Notyf().error('Error al descargar la última versión.');
+                          controller.error(err);
+                      });
+                  }
+                  push();
+              }
+          })).blob();
       })
-      .then(data => {
-          if (data.files) {
-              new Notyf().success(`Archivos descargados: ${data.files.join(', ')}`);
-          } else if (data.error) {
-              new Notyf().error(data.error);
-          }
+      .then(blob => {
+          // Procesar el archivo descargado si es necesario
+          const files = [blob]; // Aquí puedes manejar el archivo como desees
+          new Notyf().success(`Archivos descargados: ${files.length} archivo(s)`);
       })
       .catch(error => {
           console.error('Error al obtener la última versión:', error);
           new Notyf().error('Error al descargar la última versión.');
+          clearInterval(progressInterval); // Detener la barra de progreso si hay error
+          closeModal(); // Cerrar el modal
       });
 });
 
