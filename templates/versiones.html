@@ -20,12 +20,12 @@
 
         <!-- Lista de versiones, inicialmente oculta -->
         <ul class="version-list">
-            {% for detalle in detalles %}
+            {% for dato in datos %}
                 <li class="version-item" onclick="toggleDetails(this)">
-                    <h3>{{ detalle.nombre }}</h3>
-                    <p>{{ detalle.fecha }}</p>
+                    <h3>{{ dato.nombre }}</h3>
+                    <p>{{ dato.fecha }}</p>
                     <div class="version-details">
-                        <p><strong>Descripción:</strong> {{ detalle.descripcion }}</p>
+                        <p><strong>Descripción:</strong> {{ dato.descripcion }}</p>
                     </div>
                 </li>
             {% endfor %}
@@ -46,7 +46,6 @@
     <div id="updateModal" class="modal hidden" onclick="closeModal(event)">
         <div class="modal-content">
             <p id="updateMessage">Descargando...</p>
-            <progress id="downloadingBar" value="0" max="100"></progress>
             <button id="updateBtn" class="btn-actualizar">Actualizar</button>
         </div>
     </div>

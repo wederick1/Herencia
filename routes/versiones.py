@@ -8,42 +8,30 @@ from datetime import datetime
 # Definir UPLOAD_FOLDER dentro de este archivo
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "archivos")     # Carpeta para guardar archivos
-
+DESTINATION_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 # Crear la carpeta si no existe
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 bp = Blueprint('versiones', __name__)
 
+
 @bp.route('/versiones')
 @login_required
 def versiones():
     try:
         # Leer los detalles de la versión actual desde el archivo
-        detalles = leer_detalles_version()
+        datos = leer_detalles_version()
 
-        # Obtener la información de releases desde GitHub
-        _, new_version_available, latest_release = obtener_releases()
-
-        # Crear un diccionario para la versión más reciente
-        if latest_release:
-            detalles_nueva_version = {
-                "nombre": latest_release["name"],
-                "fecha": datetime.strptime(latest_release["created_at"], "%Y-%m-%dT%H:%M:%SZ").strftime("%d/%m/%Y"),
-                "descripcion": latest_release.get("body", "Sin descripción"),
-                "url": latest_release["html_url"],
-            }
-        else:
-            detalles_nueva_version = None
-
+        # Renderizar la plantilla con los detalles
         return render_template(
             "versiones.html",
-            detalles=[detalles],  # Versión instalada
-            new_version_available=new_version_available,  # Si hay nueva versión
-            detalles_nueva_version=detalles_nueva_version  # Detalles de la nueva versión, si existe
+            datos=datos # Detalles de la nueva versión, si existe
         )
 
     except Exception as e:
+        # Si ocurre un error, solo renderizamos la plantilla sin los detalles
+        print(f"Error en la ruta '/versiones': {e}")  # Para depuración
         return render_template("versiones.html")
 
 
@@ -58,17 +46,20 @@ def check_for_update():
     # Retornar si hay una nueva versión disponible
     return jsonify({"new_version_available": new_version_available})
 
+
+# Define la variable DESTINATION_FOLDER antes de usarla
+
+
 @bp.route('/download_latest_version', methods=['GET'])
 def download_latest_version():
     try:
         # Obtener la última versión y los datos
         versions, new_version_available, latest_release = obtener_releases()
+        version_details_path = os.path.join(DESTINATION_FOLDER, "Version_details.txt")
+        fecha_formateada = datetime.strptime(latest_release['published_at'], "%Y-%m-%dT%H:%M:%SZ").strftime("%d/%m/%Y")
 
         if latest_release and latest_release["assets"]:
             downloaded_files = []  # Lista para registrar archivos descargados
-
-            # Directorio donde se guardarán los archivos extraídos
-            DESTINATION_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
             # Descargar y extraer el archivo ZIP
             for asset in latest_release["assets"]:
@@ -110,13 +101,43 @@ def download_latest_version():
                     shutil.rmtree(versiones_folder)
                     shutil.rmtree(UPLOAD_FOLDER)
 
+            # Verificar si el archivo 'Version_details.txt' existe y leer las versiones existentes
+            if os.path.exists(version_details_path):
+                versiones_existentes = leer_detalles_version()
 
-                # Crear el archivo Version_details.txt con los detalles de la versión
-            version_details_path = os.path.join(DESTINATION_FOLDER, "Version_details.txt")
-            with open(version_details_path, 'w', encoding='utf-8') as f:
-                f.write(f"Nombre de la versión: {latest_release['name']}\n")
-                f.write(f"Descripción: {latest_release.get('body', 'No disponible')}\n")
-                f.write(f"Fecha de creación: {latest_release['created_at']}\n")
+                # Verificar si la versión nueva ya está en el archivo
+                version_nueva = latest_release['name']
+                for version in versiones_existentes:
+                    if version['nombre'] == version_nueva:
+                        print(f"La versión {version_nueva} ya existe, no se agregará.")
+                        return jsonify({"message": "La versión ya existe en el archivo."}), 200
+
+                # Preparar los detalles de la nueva versión
+                nueva_version = (
+                    f"Nombre de la versión: {latest_release['name']}\n"
+                    f"Descripción: {latest_release.get('body', 'No disponible')}\n"
+                    f"Fecha de creación: {fecha_formateada}\n\n"
+                )
+
+                # Leer el contenido actual del archivo
+                with open(version_details_path, 'r', encoding='utf-8') as f:
+                    contenido_existente = f.read()
+
+                # Sobrescribir el archivo, agregando la nueva versión al inicio
+                with open(version_details_path, 'w', encoding='utf-8') as f:
+                    f.write(nueva_version)  # Escribir la nueva versión al principio
+                    f.write(contenido_existente)  # Escribir el contenido existente después
+
+                print(f"Versión {version_nueva} agregada correctamente.")
+                return jsonify({"message": "Nueva versión agregada correctamente."}), 200
+
+            else:
+                # Crear el archivo 'Version_details.txt' con los detalles de la primera versión
+                with open(version_details_path, 'w', encoding='utf-8') as f:
+                    f.write(f"Nombre de la versión: {latest_release['name']}\n")
+                    f.write(f"Descripción: {latest_release.get('body', 'No disponible')}\n")
+                    f.write(f"Fecha de creación: {fecha_formateada}\n")
+                    print(f"Archivo 'Version_details.txt' creado y versión {latest_release['name']} agregada.")
 
 
             return jsonify({"message": "Archivos descargados y extraídos correctamente", "files": downloaded_files}), 200
